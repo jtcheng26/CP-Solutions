@@ -2,7 +2,7 @@
    LANG: C++14
    PROG: milk2
 */
-
+// Better solution in milk2
 #include <iostream>
 #include <fstream>
 #include <string>

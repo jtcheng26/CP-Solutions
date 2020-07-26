@@ -1,8 +1,3 @@
-/*
-   LANG: C++14
-   PROG: <name>
-*/
-
 #include <iostream>
 #include <fstream>
 #include <string>
@@ -18,13 +13,13 @@ using namespace std;
 ll n;
 
 int solve() {
-  return 0;
+  int res = 0;
+  return res;
 }
 
 int main() {
-  ofstream fout ("test.out");
-  ifstream fin ("test.in");
-  fin >> n;
-  fout << solve() << endl;
+  ios_base::sync_with_stdio(false);cin.tie(0);cout.tie(0);
+  cin >> n;
+  cout << solve() << endl;
   return 0;
 }

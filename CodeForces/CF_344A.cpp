@@ -1,8 +1,3 @@
-/*
-   LANG: C++14
-   PROG: <name>
-*/
-
 #include <iostream>
 #include <fstream>
 #include <string>
@@ -22,9 +17,16 @@ int solve() {
 }
 
 int main() {
-  ofstream fout ("test.out");
-  ifstream fin ("test.in");
-  fin >> n;
-  fout << solve() << endl;
+  ios_base::sync_with_stdio(false);cin.tie(0);cout.tie(0);
+  cin >> n; int m; int res=0;
+  int last;
+  cin >> last;
+  for(int i=1;i<n;i++) {
+    cin >> m;
+    if (m != last)
+      res++;
+    last = m;
+  }
+  cout << res+1 << endl;
   return 0;
 }

@@ -2,81 +2,80 @@
    LANG: C++14
    PROG: numtri
 */
-/*
-Works but too slow. See Numtri2 for better solution (r <= 1000)
-*/
 
 #include <iostream>
 #include <fstream>
-#include <string>
 #include <vector>
 #include <algorithm>
-#include <map>
-#include <cmath>
+
+#define RMAX 1000
 
 typedef long long ll;
 
 using namespace std;
 
 struct node {
-  int val; int depth;
+  int val;
   node *left; node *right;
 };
 
-int r; int opt = 0;
-vector<vector<node> > tree;
+int r; node root;
+vector<vector<node> > dp;
+// vector instead of array because initializing a 1000x1000 memory block is not allowed in the USACO grading system.
 
-int dfs(node root, int total) {
-  if (root.depth == r-1)
-    return total;
-  int l_res = dfs(*root.left, total+root.left->val);
-  int r_res = dfs(*root.right, total+root.right->val);
-  int res = max(l_res, r_res);
-  if (res > opt)
-    opt = res;
+int dfs(int d) {
+  int res = 0;
+  if (d < 0) {
+    return root.val + max(root.left->val, root.right->val);
+  }
+  else {
+    for (int i=0;i<d+2;i++) {
+      dp[d][i].val = dp[d][i].val + max(dp[d][i].left->val, dp[d][i].right->val);
+    }
+    res = dfs(--d);
+  }
   return res;
 }
 
 int solve() {
-  return dfs(tree[0][0], tree[0][0].val);
+  return dfs(r-3);
 }
 
 int main() {
-  //ofstream fout ("numtri.out");
-  //ifstream fin ("numtri.in");
+  ofstream fout ("numtri.out");
+  ifstream fin ("numtri.in");
   int n;
-  cin >> r;//
-  cin >> n;//
+  fin >> r;//
+  fin >> n;//
   if (r == 1) {
-    cout << n << endl;
+    fout << n << endl;//
     return 0;
   }
-  node root;
   root.val = n;
-  vector<node> rootrow;
-  rootrow.push_back(root);
-  tree.push_back(rootrow);
-  for (int i=1;i<r;i++) {
+  for (int i=0;i<r-1;i++) {
     vector<node> row;
-    for (int j=0;j<i+1;j++) {
-      cin >> n;//
+    for (int j=0;j<i+2;j++) {
+      fin >> n;//
       node ntri = {.val = n};
       row.push_back(ntri);
     }
-    tree.push_back(row);
+    dp.push_back(row);
   }
-  for (int i=0;i<tree.size();i++) {
-    for (int j=0;j<tree[i].size();j++) {
-      tree[i][j].depth = i;
-      if (i < tree.size()-1) {
-        node *pl = &tree[i+1][j];
-        node *pr = &tree[i+1][j+1];
-        tree[i][j].left = pl;
-        tree[i][j].right = pr;
+  node *pl = &dp[0][0];
+  node *pr = &dp[0][1];
+  root.left = pl;
+  root.right = pr;
+  for (int i=0;i<r-2;i++) {
+    for (int j=0;j<i+2;j++) {
+      if (i < r-2) {
+        node *pl = &dp[i+1][j];
+        node *pr = &dp[i+1][j+1];
+        dp[i][j].left = pl;
+        dp[i][j].right = pr;
       }
-      //cout << tree[i][j].val << tree[i][j].left->val << tree[i][j].right->val << endl;
+      //cout << dp[i][j].val << dp[i][j].left->val << dp[i][j].right->val << endl;
     }
   }
-  cout << solve() << endl;//
+  fout << solve() << endl;//
   return 0;
 }

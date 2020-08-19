@@ -13,16 +13,25 @@ typedef long long ll;
 using namespace std;
 
 int n;
+int res[101];
 
-int solve() {
-  int res = 0;
-  return res;
+void solve() {
+  for (int i=0;i<n;i++) {
+    res[i] = i+1;
+  }
 }
 
 int main() {
   ios_base::sync_with_stdio(false);cin.tie(0);cout.tie(0);
   int t;
-  cin >> n;
-  cout << solve() << endl;
+  cin >> t;
+  while (t--) {
+    cin >> n;
+    solve();
+    for (int i=0;i<n-1;i++) {
+      cout << res[i] << " ";
+    }
+    cout << res[n-1] << endl;
+  }
   return 0;
 }

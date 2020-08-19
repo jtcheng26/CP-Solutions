@@ -10,110 +10,91 @@ typedef long long ll;
 
 using namespace std;
 
-ll fc, fr, bc;
-vector<ll> wp;
-vector<ll> goal;
-vector<ll> gap;
+ll n, m, fc, fr, bc;
+ll a[200002];
+ll b[200002];
 vector<vector<ll> > gaps;
 
-bool in_goal(ll p) {
-  for (ll i=0;i<goal.size();i++) {
-    if (goal[i] == p)
-      return true;
+int set_gaps() {
+  int prev = 1;
+  for (int i=1;i<m+2;i++) {
+    vector<ll> gap; int j;
+    for (j=prev;j<=n;j++) {
+      if (i <= m && a[j] == b[i])
+        break;
+      gap.push_back(j);
+      //cout << a[j];
+    }
+    //cout << endl;
+    if (j == n + 1 && i < m+1) return 0;
+    if (gap.size() > 0) gaps.push_back(gap);
+    prev = j+1;
   }
-  return false;
+  return 1;
 }
 
-bool check_possible() {
-  int last_i = -1; int count = 0;
-  for (int i=0;i<goal.size();i++) {
-    for (int j=0;j<wp.size();j++) {
-      if (wp[j] == goal[i]) {
-        if (j < last_i)
-          return false;
-        count++;
-        last_i = j;
-      }
-    }
-  }
-  return count == goal.size() ? true : false;
-}
-
-void set_gaps() {
-  int k = 0;
-  for (ll i=0;i<wp.size();i++) {
-    if (in_goal(wp[i])) {
-      gaps.push_back(gap);
-      gap.clear();
-      continue;
-    }
-    else {
-      gap.push_back(i);
-    }
-  }
-  if (gap.size() > 0)
-    gaps.push_back(gap);
-  /*
+ll solve() {
+  if (set_gaps() == 0) return -1;
+  ll res = 0;
   for (int i=0;i<gaps.size();i++) {
-    for (int j=0;j<gaps[i].size();j++) {
-      cout << gaps[i][j] << endl;
-    }
-  }
-  */
-}
-bool erase_if_pos(int i, int j) {
-  if (wp[gaps[i][j]] < wp[gaps[i][j-1]] || wp[gaps[i][j]] < wp[gaps[i][j+1]]) {
-    gaps[i].erase(gaps[i].begin() + j);
-    return true;
-  }
-  return false;
-}
-int solve() {
-  set_gaps();
-  int res = 0;
-  for (int i=0;i<gaps.size();i++) {
-    if (gaps[i].size() % fr == 1) {
-      bool flag = false;
-      for (int j=0;j<gaps[i].size();j++) {
-        if (!erase_if_pos(i, j)) {
-          flag = true;
-        } else
-          res += bc;
-      }
-      if (flag)
+    if (gaps[i].size() == 1) {
+      //cout << gaps[i][0] << endl;
+      if (a[gaps[i][0]] < a[gaps[i][0]-1] || a[gaps[i][0]] < a[gaps[i][0]+1])
+        res = fr == 1 && fc < bc ? res + fc : res + bc;
+      else if (fr == 1)
+        res += fc;
+      else {
         return -1;
-    }
-    /*
-    for (int j=0;j<gaps[i].size();j++) {
-      if (fc / fr > bc) {
-        if (erase_if_pos(i, j)) {
-          res += bc;
+      }
+      //cout << res << endl;
+    } else {
+      ll mx = 0;
+      //cout << mx << endl;
+      for (int j=0;j<gaps[i].size();j++) {
+        int g = gaps[i][j];
+        mx = max(mx, a[g]);
+      }
+      //cout << mx << endl;
+      if (mx < a[gaps[i][0]-1] || mx < a[gaps[i][gaps[i].size()-1]+1]) {
+        if (gaps[i].size() / fr > 0) {
+          if (bc * fr < fc) {
+            res += gaps[i].size() * bc;
+          } else {
+            res += (gaps[i].size() / fr) * fc;
+            res += bc * (gaps[i].size() - fr * (gaps[i].size() / fr));
+          }
+        } else {
+          res += gaps[i].size() * bc;
         }
       } else {
-
+        //cout << gaps[i].size() << " " << fr << endl;
+        if (gaps[i].size() / fr <= 0) return -1;
+        else {
+          if (bc * fr < fc) {
+            res += fc + (gaps[i].size() - fr) * bc;
+          } else {
+            res += (gaps[i].size() / fr) * fc;
+            res += bc * (gaps[i].size() - fr * (gaps[i].size() / fr));
+          }
+        }
       }
+      //cout << res << endl;
     }
-    */
-    res += fc * (gaps[i].size() / fr);
   }
   return res;
 }
 
 int main() {
   ios_base::sync_with_stdio(false);cin.tie(0);cout.tie(0);
-  int n, m, a;
-  cin >> n >> m >> fc >> fr >> bc;
-  for (int i=0;i<n;i++) {
-    cin >> a;
-    wp.push_back(a);
+  cin >> n >> m;
+  cin >> fc >> fr >> bc;
+  for (int i=1;i<=n;i++) {
+    cin >> a[i];
   }
-  for (int i=0;i<m;i++) {
-    cin >> a;
-    goal.push_back(a);
+  for (int i=1;i<=m;i++) {
+    cin >> b[i];
   }
-  if (!check_possible())
-    cout << -1 << endl;
-  else
-    cout << solve() << endl;
+  a[0] = -1; a[n+1] = -1;
+  cout << solve() << endl;
   return 0;
 }

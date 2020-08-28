@@ -8,7 +8,6 @@
 
 #define INFI 1e18+7
 #define pb push_back
-#define mp make_pair
 #define F first
 #define S second
 
@@ -16,11 +15,13 @@ typedef long long ll;
 
 using namespace std;
 
-int n;
+int n, k;
 
 int solve() {
   int res = 0;
-  return res;
+  if (k > n) return k - n;
+  else if (n % 2 != k % 2) return 1;
+  else return 0;
 }
 
 int main() {
@@ -28,7 +29,7 @@ int main() {
   int t;
   cin >> t;
   while (t--) {
-    cin >> n;
+    cin >> n >> k;
     cout << solve() << endl;
   }
   return 0;

@@ -17,19 +17,27 @@ typedef long long ll;
 using namespace std;
 
 int n;
+int a[200001];
+int b[200001];
+map<int, ll> cnt;
 
-int solve() {
-  int res = 0;
+ll solve() {
+  ll res = 0;
+  for (int i=0;i<n;i++) {
+    b[i] = a[i];
+    a[i] -= i;
+  }
+  for (int i=0;i<n;i++) {
+    cnt[a[i]] += b[i];
+    res = max(cnt[a[i]], res);
+  }
   return res;
 }
 
 int main() {
   ios_base::sync_with_stdio(false);cin.tie(0);cout.tie(0);
-  int t;
-  cin >> t;
-  while (t--) {
-    cin >> n;
-    cout << solve() << endl;
-  }
+  cin >> n;
+  for (int i=0;i<n;i++) cin >> a[i];
+  cout << solve() << endl;
   return 0;
 }

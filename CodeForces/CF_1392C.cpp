@@ -6,20 +6,22 @@
 #include <cmath>
 #include <queue>
 
-#define INFI 1e18+7
-#define pb push_back
-#define mp make_pair
-#define F first
-#define S second
+#define INFI 100000007
 
 typedef long long ll;
 
 using namespace std;
 
 int n;
+int a[200001];
 
-int solve() {
-  int res = 0;
+ll solve() {
+  ll res = 0;
+  for (int i=0;i<n-1;i++) {
+    if (a[i] + res > a[i+1] + res) {
+      res += a[i] + res - (a[i+1] + res);
+    }
+  }
   return res;
 }
 
@@ -29,6 +31,9 @@ int main() {
   cin >> t;
   while (t--) {
     cin >> n;
+    for (int i=0;i<n;i++) {
+      cin >> a[i];
+    }
     cout << solve() << endl;
   }
   return 0;

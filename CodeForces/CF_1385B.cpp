@@ -17,9 +17,16 @@ typedef long long ll;
 using namespace std;
 
 int n;
+int a[101];
+vector<int> ans;
 
 int solve() {
   int res = 0;
+  int seen[101] = {0};
+  for (int i=0;i<2*n;i++) {
+    if (seen[a[i]]) ans.pb(a[i]);
+    else seen[a[i]] = 1;
+  }
   return res;
 }
 
@@ -29,7 +36,14 @@ int main() {
   cin >> t;
   while (t--) {
     cin >> n;
-    cout << solve() << endl;
+    ans.clear();
+    for (int i=0;i<2*n;i++) {
+      cin >> a[i];
+    }
+    solve();
+    for (int i=0;i<n;i++) {
+      cout << ans[i] << (i == n-1 ? "\n" : " ");
+    }
   }
   return 0;
 }

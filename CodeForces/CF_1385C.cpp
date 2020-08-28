@@ -17,10 +17,22 @@ typedef long long ll;
 using namespace std;
 
 int n;
+int a[200002];
 
 int solve() {
   int res = 0;
-  return res;
+  a[0] = -1;
+  a[n+1] = -1;
+  int prev = a[n+1];
+  int curr = a[n];
+  for (int i=n;i>=1;i--) {
+    if (a[i] != curr) {
+      if (a[i] > curr && curr < prev) return i;
+      prev = curr;
+      curr = a[i];
+    }
+  }
+  return 0;
 }
 
 int main() {
@@ -29,6 +41,7 @@ int main() {
   cin >> t;
   while (t--) {
     cin >> n;
+    for (int i=1;i<=n;i++) cin >> a[i];
     cout << solve() << endl;
   }
   return 0;

@@ -16,11 +16,18 @@ typedef long long ll;
 
 using namespace std;
 
-int n;
+int n, m, k;
+int h[101];
 
 int solve() {
-  int res = 0;
-  return res;
+  for (int i=0;i<n-1;i++) {
+    if (h[i] >= h[i+1] - k) m += h[i] - max(0, (h[i+1] - k));
+    else {
+      if (m < h[i+1] - k - h[i]) return false;
+      m -= h[i+1] - k - h[i];
+    }
+  }
+  return true;
 }
 
 int main() {
@@ -28,8 +35,9 @@ int main() {
   int t;
   cin >> t;
   while (t--) {
-    cin >> n;
-    cout << solve() << endl;
+    cin >> n >> m >> k;
+    for (int i=0;i<n;i++) cin >> h[i];
+    cout << (solve() ? "YES" : "NO") << endl;
   }
   return 0;
 }

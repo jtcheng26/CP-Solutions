@@ -17,9 +17,16 @@ typedef long long ll;
 using namespace std;
 
 int n;
+string s;
 
-int solve() {
-  int res = 0;
+string solve() {
+  string res = "";
+  if (n == 1) return s.substr(0, 1);
+  else {
+    for (int i=0;i<n;i++) {
+      res += s.substr((2 * n - 1) / 2, 1);
+    }
+  }
   return res;
 }
 
@@ -29,6 +36,7 @@ int main() {
   cin >> t;
   while (t--) {
     cin >> n;
+    cin >> s;
     cout << solve() << endl;
   }
   return 0;

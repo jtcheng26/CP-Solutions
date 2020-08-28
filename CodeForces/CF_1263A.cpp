@@ -16,11 +16,15 @@ typedef long long ll;
 
 using namespace std;
 
-int n;
+int a, b, c;
 
 int solve() {
   int res = 0;
-  return res;
+  if (b > a) swap(a, b);
+  if (c > a) swap(a, c);
+  if (c > b) swap(b, c);
+  if (a >= b + c) return b + c;
+  return (a + b + c) / 2;
 }
 
 int main() {
@@ -28,7 +32,7 @@ int main() {
   int t;
   cin >> t;
   while (t--) {
-    cin >> n;
+    cin >> a >> b >> c;
     cout << solve() << endl;
   }
   return 0;

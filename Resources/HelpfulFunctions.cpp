@@ -49,36 +49,6 @@ int bin_to_int(string a) {
   return res;
 }
 
-// Returns a vector of all prime numbers from 2 to limit.
-vector<ll> make_primes(ll limit) {
-  vector<ll> primes;
-  for (int i=0;i<=limit; i++)
-    primes.push_back(true);
-  prime[0] = prime[1] = false;
-  for (int i=2;i*i<=limit;i++){
-    if (prime[i]){
-      for (int k=limit/i,j=i*k;k>=i;k--,j-=i){
-        if (prime[k])
-          prime[j] = false;
-      }
-    }
-  }
-  return primes;
-}
-
-// Returns whether or not a number is prime.
-bool isPrime(ll n) {
-  if (n <= 3)
-    return n > 1;
-  else if (n % 2 == 0 || n % 3 == 0)
-    return false;
-  for (int i=5;i*i<=n;i+=6) {
-    if (n % i == 0 || n % (i+2) == 0)
-      return false;
-  }
-  return true;
-}
-
 // Returns a 90 degree CCW rotation of a 2d vector.
 vector<vector<char> > sqrotate(vector<vector<char> > sqr) {
   vector<vector<char> > rtres;
@@ -120,4 +90,10 @@ ll modInverse(ll n, ll p) {
      x = (x * x) % p;
    }
    return res;
+}
+
+// gcd of 2 integers
+int gcd(int a, int b) {
+  if (b == 0) return a;
+  return gcd(b, a % b);
 }

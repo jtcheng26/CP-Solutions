@@ -11,6 +11,11 @@
 #include <map>
 #include <cmath>
 
+#define mp make_pair
+#define pb push_back
+#define F first
+#define S second
+
 typedef long long ll;
 
 using namespace std;

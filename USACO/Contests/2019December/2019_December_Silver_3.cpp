@@ -51,8 +51,8 @@ bool happy(int be, int en, int t) {
 }
 
 int main() {
-  ofstream fout ("milkvisits.out");
-  ifstream fin ("milkvisits.in");
+  //ofstream fout ("milkvisits.out");
+  //ifstream fin ("milkvisits.in");
   fin >> n >> m;
   string s;
   fin >> s;

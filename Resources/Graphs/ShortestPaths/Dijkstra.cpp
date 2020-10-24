@@ -8,32 +8,30 @@
 */
 struct Graph {
   int n;
-  vector<int> adj[100001];
+  vector<pair<int, int> > adj[100001]; // pair edge weight, node
   const int INF = 1000000007;
+  int dist[100001];
 
-  void init(int num) { n = num; for (int i=1;i<=n;i++) adj[i].clear(); } // clear tree
-  void add_edge(int a, int b) { adj[a].pb(b); adj[b].pb(a); } // add edge
-  
+  void init(int num) { n = num; for (int i=0;i<=n;i++) adj[i].clear(); } // clear tree
+  void add_edge(int a, int b, int c) { adj[a].pb(mp(c, b)); adj[b].pb(mp(c, a)); } // add edge
+
   void dijkstra(int root) {
-    int dist[n]; bool visited[n];
+    bool visited[n];
     priority_queue<pair<int, int>, vector<pair<int, int> >, greater<pair<int, int> > > pq;
-    for (int i=0;i<n;i++) {
-      dist[i] = INFI; visited[i] = false;
-      pair<int, int> p(dist[i], i);
-      pq.push(p); // for some reason, initializing the pq with n values instead of just 1 drastically decreases runtime.
-    }
+    for (int i=0;i<n;i++) { dist[i] = INFI; visited[i] = false; }
     dist[root] = 0;
-    pair<int, int> p(dist[root], i); pq.push(p);
+    pair<int, int> p(dist[root], root); pq.push(p);
     while (pq.size() > 0) {
       pair<int, int> u = pq.top(); pq.pop();
       int idx = u.second;
       if (visited[idx]) continue; visited[idx] = true;
-      for (int i=0;i<adj[idx].size();i++) {
-        int child = adj[idx][i]; if (visited[child]) continue;
-        int d = dist[idx] + 1; // replace 1 w/ weight of edge
-        if (dist[child] > d) dist[child] = d;
-        pair<int, int> node(dist[child], child); pq.push(node);
+      for (auto child : adj[idx]) {
+        if (visited[child.second]) continue;
+        int d = dist[idx] + child.first;
+        if (dist[child.second] > d) dist[child.second] = d;
+        pair<int, int> node(dist[child.second], child.second); pq.push(node);
       }
     }
   }
+  int get_dist(int u) { return dist[u]; }
 };

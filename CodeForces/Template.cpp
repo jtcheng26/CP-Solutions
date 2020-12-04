@@ -29,7 +29,7 @@ int main() {
   cin >> t;
   while (t--) {
     cin >> n;
-    cout << solve() << endl;
+    cout << solve() << "\n";
   }
   return 0;
 }

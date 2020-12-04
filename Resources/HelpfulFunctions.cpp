@@ -79,19 +79,6 @@ vector<vector<char> > reflect(vector<vector<char> > sqr) {
   return rfres;
 }
 
-//modular multiplicative inverse
-ll modInverse(ll n, ll p) {
-  ll res = 1; ll y = p - 2;
-   x = x % p;
-   while (y > 0) {
-     if (y & 1)
-       res = (res * x) % p;
-     y = y >> 1;
-     x = (x * x) % p;
-   }
-   return res;
-}
-
 // gcd of 2 integers
 int gcd(int a, int b) {
   if (b == 0) return a;

@@ -79,3 +79,47 @@ struct SegTree {
     return res;
   }
 };
+
+/*
+Tree 3:
+  Same as tree 2 but with coordinate compression and range minimum instead of sum.
+  Range max can be done by replacing min with max.
+  Ideal for implementing sweep line in 10^9 coordinate grid but with 10^6 or less events
+*/
+struct SegTree {
+  int n = 500001;  // array size
+  int t[1000001] = {0};
+  map<int, bool> converted;
+  map<int, int> conv;
+  int curr = 0;
+
+  void setVals(vector<int> v) {
+    sort(v.begin(), v.end());
+    for (int val : v) {
+      if (!converted[val]) {
+        conv[val] = curr++;
+        converted[val] = true;
+      }
+    }
+  }
+
+  void init() {  // build the tree
+    for (int i = n - 1; i > 0; --i) t[i] = min(t[i<<1], t[i<<1|1]);
+  }
+
+  void ptUpdate(int loc, int value) {  // set value at position p
+    int p = conv[loc];
+    for (t[p += n] = value; p > 1; p >>= 1) t[p>>1] = min(t[p], t[p^1]);
+  }
+
+  int rngMin(int left, int right) {  // min on interval [l, r)
+    int l = conv[left];
+    int r = conv[right];
+    int res = 0;
+    for (l += n, r += n; l < r; l >>= 1, r >>= 1) {
+      if (l&1) res = min(res, t[l++]);
+      if (r&1) res = min(res, t[--r]);
+    }
+    return res;
+  }
+};

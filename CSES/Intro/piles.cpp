@@ -17,11 +17,11 @@ typedef long long ll;
 
 using namespace std;
 
-int n;
+int a, b;
 
 int solve() {
-  int res = 0;
-  return res;
+  if ((a + b) % 3 != 0) return false;
+  return min(a, b) * 2 >= max(a, b);
 }
 
 int main() {
@@ -29,8 +29,8 @@ int main() {
   int t;
   cin >> t;
   while (t--) {
-    cin >> n;
-    cout << solve() << "\n";
+    cin >> a >> b;
+    cout << (solve() ? "YES" : "NO") << "\n";
   }
   return 0;
 }

@@ -20,17 +20,25 @@ using namespace std;
 int n;
 
 int solve() {
-  int res = 0;
-  return res;
+  int twos = 0;
+  int fives = 0;
+  const int primes[] = {2,5};
+  for(int i = 0; i < 2; i++){
+    ll cur = primes[i];
+    ll total = 0;
+    while(cur <= n){
+      total += (n/cur);
+      cur = cur*primes[i];
+    }
+    if (primes[i] == 2) twos = total;
+    else if (primes[i] == 5) fives = total;
+  }
+  return min(twos, fives);
 }
 
 int main() {
   ios_base::sync_with_stdio(false);cin.tie(0);cout.tie(0);
-  int t;
-  cin >> t;
-  while (t--) {
-    cin >> n;
-    cout << solve() << "\n";
-  }
+  cin >> n;
+  cout << solve() << "\n";
   return 0;
 }

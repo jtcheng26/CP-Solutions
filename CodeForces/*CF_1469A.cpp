@@ -6,22 +6,26 @@
 #include <cmath>
 #include <queue>
 
-#define INF 1000000001
+#define INFI 1e18+7
 #define pb push_back
 #define mp make_pair
 #define F first
 #define S second
-#define MOD 1000000007
 
 typedef long long ll;
 
 using namespace std;
 
 int n;
+string s;
 
 int solve() {
-  int res = 0;
-  return res;
+  int qCnt = 0;
+  if (s[0] == ')' || s[s.length() - 1] == '(') return false;
+  for (int i=0;i<s.length();i++) {
+    if (s[i] == '?') qCnt++;
+  }
+  return qCnt % 2 == 0;
 }
 
 int main() {
@@ -29,8 +33,8 @@ int main() {
   int t;
   cin >> t;
   while (t--) {
-    cin >> n;
-    cout << solve() << "\n";
+    cin >> s;
+    cout << (solve() ? "YES" : "NO") << "\n";
   }
   return 0;
 }

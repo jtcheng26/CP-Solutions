@@ -18,19 +18,36 @@ typedef long long ll;
 using namespace std;
 
 int n;
+ll a[21];
+ll ans;
+ll cnt = 0;
+ll sum = 0;
+
+void rec(int j) {
+  if (j == n) return;
+  cnt += a[j];
+  ans = min(ans, abs(cnt - (sum - cnt)));
+  rec(j + 1);
+  cnt -= a[j];
+  ans = min(ans, abs(cnt - (sum - cnt)));
+  rec(j + 1);
+}
 
 int solve() {
-  int res = 0;
-  return res;
+  ans = INF;
+  for (int i=0;i<n;i++) {
+    sum += a[i];
+  }
+  rec(0);
+  return ans;
 }
 
 int main() {
   ios_base::sync_with_stdio(false);cin.tie(0);cout.tie(0);
-  int t;
-  cin >> t;
-  while (t--) {
-    cin >> n;
-    cout << solve() << "\n";
+  cin >> n;
+  for (int i=0;i<n;i++) {
+    cin >> a[i];
   }
+  cout << solve() << "\n";
   return 0;
 }

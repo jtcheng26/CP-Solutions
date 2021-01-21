@@ -17,20 +17,26 @@ typedef long long ll;
 
 using namespace std;
 
-int n;
+int n, k;
+int a[101];
 
-int solve() {
-  int res = 0;
-  return res;
+ll solve() {
+  ll dp[k+1];
+  for (int i=1;i<=k;i++) dp[i] = 0;
+  dp[0] = 1;
+    for (int i=1;i<=k;i++) {
+      for (int j=0;j<n;j++) {
+        if (i < a[j]) continue;
+        dp[i] = (dp[i] + dp[i-a[j]]) % MOD;
+      }
+    }
+  return dp[k];
 }
 
 int main() {
   ios_base::sync_with_stdio(false);cin.tie(0);cout.tie(0);
-  int t;
-  cin >> t;
-  while (t--) {
-    cin >> n;
-    cout << solve() << "\n";
-  }
+  cin >> n >> k;
+  for (int i=0;i<n;i++) cin >> a[i];
+  cout << solve() << "\n";
   return 0;
 }

@@ -20,17 +20,24 @@ using namespace std;
 int n;
 
 int solve() {
-  int res = 0;
-  return res;
+  int dp[n+1];
+  for (int i=0;i<=n;i++) {
+    dp[i] = INF;
+  }
+  dp[n] = 0;
+  for (int i=n;i>=0;i--) {
+    int k = i;
+    while (k > 0) {
+      dp[i - (k % 10)] = min(dp[i - (k % 10)], dp[i] + 1);
+      k /= 10;
+    }
+  }
+  return dp[0];
 }
 
 int main() {
   ios_base::sync_with_stdio(false);cin.tie(0);cout.tie(0);
-  int t;
-  cin >> t;
-  while (t--) {
-    cin >> n;
-    cout << solve() << "\n";
-  }
+  cin >> n;
+  cout << solve() << "\n";
   return 0;
 }

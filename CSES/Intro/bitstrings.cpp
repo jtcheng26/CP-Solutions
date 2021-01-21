@@ -19,18 +19,17 @@ using namespace std;
 
 int n;
 
-int solve() {
-  int res = 0;
+ll solve() {
+  ll res = 1;
+  for (int i=1;i<=n;i++) {
+    res = (res * 2) % MOD;
+  }
   return res;
 }
 
 int main() {
   ios_base::sync_with_stdio(false);cin.tie(0);cout.tie(0);
-  int t;
-  cin >> t;
-  while (t--) {
-    cin >> n;
-    cout << solve() << "\n";
-  }
+  cin >> n;
+  cout << solve() << "\n";
   return 0;
 }

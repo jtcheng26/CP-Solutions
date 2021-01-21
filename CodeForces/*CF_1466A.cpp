@@ -6,21 +6,31 @@
 #include <cmath>
 #include <queue>
 
-#define INF 1000000001
+#define INFI 1e18+7
 #define pb push_back
 #define mp make_pair
 #define F first
 #define S second
-#define MOD 1000000007
+#define MOD 1e9+7
 
 typedef long long ll;
 
 using namespace std;
 
 int n;
+int x[51];
 
 int solve() {
   int res = 0;
+  int a[51] = {0};
+  for (int i=0;i<n;i++) {
+    for (int j=i+1;j<n;j++) {
+      if (a[x[j]-x[i]] == 0) {
+        a[x[j]-x[i]] = 1;
+        res++;
+      }
+    }
+  }
   return res;
 }
 
@@ -30,6 +40,7 @@ int main() {
   cin >> t;
   while (t--) {
     cin >> n;
+    for (int i=0;i<n;i++) cin >> x[i];
     cout << solve() << "\n";
   }
   return 0;

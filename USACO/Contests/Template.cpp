@@ -1,4 +1,5 @@
 #include <iostream>
+#include <fstream>
 #include <string>
 #include <vector>
 #include <algorithm>
@@ -24,7 +25,8 @@ int solve() {
 }
 
 int main() {
-  ios_base::sync_with_stdio(false);cin.tie(0);cout.tie(0);
+  ofstream cout ("test.out");
+  ifstream cin ("test.in");
   cin >> n;
   cout << solve() << endl;
   return 0;

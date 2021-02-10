@@ -18,14 +18,31 @@ typedef long long ll;
 using namespace std;
 
 int n;
+string s;
 
 int solve() {
-  return 0;
+  int ans = 1;
+  int cnt[26] = {0};
+  int l = 0;
+  int r = 0;
+  while (r < n) {
+    cnt[s[r]-'a']++;
+    if (cnt[s[r]-'a'] > ans) {
+      ans = cnt[s[r]-'a'];
+      while (l < r && s[l] != s[r]) {
+        l++;
+      }
+      l++;
+    }
+    r++;
+  }
+  return ans;
 }
 
 int main() {
   ios_base::sync_with_stdio(false);cin.tie(0);cout.tie(0);
-  cin >> n;
+  cin >> s;
+  n = s.length();
   cout << solve() << endl;
   return 0;
 }

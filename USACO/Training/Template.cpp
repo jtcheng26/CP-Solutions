@@ -1,17 +1,20 @@
+/*
+   LANG: C++11
+   PROG: <name>
+*/
+
 #include <iostream>
+#include <fstream>
 #include <string>
 #include <vector>
 #include <algorithm>
 #include <map>
 #include <cmath>
-#include <queue>
 
-#define INF 1000000001
 #define mp make_pair
 #define pb push_back
 #define F first
 #define S second
-#define MOD 1000000007
 
 typedef long long ll;
 
@@ -24,7 +27,8 @@ int solve() {
 }
 
 int main() {
-  ios_base::sync_with_stdio(false);cin.tie(0);cout.tie(0);
+  ofstream cout ("test.out");
+  ifstream cin ("test.in");
   cin >> n;
   cout << solve() << endl;
   return 0;

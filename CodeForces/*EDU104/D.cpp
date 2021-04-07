@@ -5,11 +5,10 @@
 #include <map>
 #include <cmath>
 #include <queue>
-#include <set>
 
 #define INF 1000000001
-#define mp make_pair
 #define pb push_back
+#define mp make_pair
 #define F first
 #define S second
 #define MOD 1000000007
@@ -21,12 +20,16 @@ using namespace std;
 int n;
 
 int solve() {
-  return 0;
+  return (sqrt(2 * n) + 1) / 2 - 1;
 }
 
 int main() {
   ios_base::sync_with_stdio(false);cin.tie(0);cout.tie(0);
-  cin >> n;
-  cout << solve() << endl;
+  int t;
+  cin >> t;
+  while (t--) {
+    cin >> n;
+    cout << solve() << "\n";
+  }
   return 0;
 }

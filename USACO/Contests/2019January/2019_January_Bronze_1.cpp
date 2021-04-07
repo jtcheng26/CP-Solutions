@@ -19,7 +19,7 @@ struct guess {
 guess arr[101];
 
 int solve() {
-  int res = 0; int max_ans = 0;
+  int max_ans = 0;
   for (int g=1;g<=3;g++) {
     int peb = g;
     int correct = 0;
@@ -30,7 +30,6 @@ int solve() {
     }
     //cout << correct << endl;
     if (correct > max_ans) {
-      res = g;
       max_ans = correct;
     }
   }

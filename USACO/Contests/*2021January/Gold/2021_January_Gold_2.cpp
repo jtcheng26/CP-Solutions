@@ -18,52 +18,47 @@ typedef long long ll;
 using namespace std;
 
 int n, k;
-int a[500001];
-vector<int> in[51];
-vector<int> out[51];
+int a[50001];
+int ok[51][51];
 
 ll solve() {
-  ll dp[n][k+1];
-  int idx[n][k+1];
-  for (int i=0;i<n;i++) {
-    for (int j=0;j<=k;j++) {
-      dp[i][j] = INF;
-      idx[i][j] = -1;
+  ll dist[k+1][n];
+  for (int i=0;i<=k;i++) {
+    for (int j=0;j<n;j++) {
+      dist[i][j] = -1;
     }
   }
-  /*
-  for (int i=1;i<=k;i++) {
-    cout << i << ": ";
-    for (int j : in[i]) {
-      cout << j << " ";
+  queue<pair<int, int> > q;
+  q.push(mp(a[0], 0));
+  dist[a[0]][0] = 0;
+  while (!q.empty()) {
+    int color = q.front().F;
+    int u = q.front().S;
+    //cout << color << " " << u << " " << dist[color][u] << "\n";
+    q.pop();
+    if (u == n - 1 && ok[color][a[u]]) {
+      return dist[color][u];
     }
-    cout << "\n";
-  }
-  */
-  dp[0][a[0]] = 0;
-  idx[0][a[0]] = 0;
-  for (int i=1;i<n;i++) {
-    for (int j=1;j<=k;j++) {
-      dp[i][j] = dp[i-1][j];
-      idx[i][j] = idx[i-1][j];
-    }
-    idx[i][a[i]] = i;
-    int j = a[i];
-    dp[i][j] = INF;
-    for (int neighbor : in[j]) {
-      if (idx[i-1][neighbor] != -1)
-        dp[i][j] = min(dp[i][j], dp[i-1][neighbor] + i - idx[i-1][neighbor]);
-    }
-    if (dp[i][j] != INF) {
-      for (int neighbor : out[j]) {
-        if (idx[i-1][neighbor] != -1) {
-          dp[i][neighbor] = min(dp[i][neighbor], dp[i][j] + i - idx[i-1][neighbor]);
-        }
-        //cout << i << " " << j << " " << dp[i][j] << "\n";
+    if (ok[color][a[u]]) {
+      if (u && dist[a[u]][u-1] == -1) {
+        dist[a[u]][u-1] = dist[color][u] + 1;
+        q.push(mp(a[u], u-1));
+      }
+      if (u < n - 1 && dist[a[u]][u+1] == -1) {
+        dist[a[u]][u+1] = dist[color][u] + 1;
+        q.push(mp(a[u], u+1));
       }
     }
+    if (u && dist[color][u-1] == -1) {
+      dist[color][u-1] = dist[color][u] + 1;
+      q.push(mp(color, u-1));
+    }
+    if (u < n - 1 && dist[color][u+1] == -1) {
+      dist[color][u+1] = dist[color][u] + 1;
+      q.push(mp(color, u+1));
+    }
   }
-  return dp[n-1][a[n-1]] == INF ? -1 : dp[n-1][a[n-1]];
+  return -1;
 }
 
 int main() {
@@ -74,10 +69,7 @@ int main() {
     for (int j=1;j<=k;j++) {
       char c;
       cin >> c;
-      if (c == '1') {
-        out[i].pb(j);
-        in[j].pb(i);
-      }
+      ok[i][j] = c - '0';
     }
   }
   cout << solve() << endl;

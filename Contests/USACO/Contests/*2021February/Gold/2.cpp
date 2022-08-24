@@ -23,34 +23,17 @@ int a[301];
 int dp[301][301];
 
 int go(int l, int r) { // inclusive
-  if (l == r) return 1;
-  if (l > r) return 0;
+  if (l >= r)
+    return 0;
   if (dp[l][r] != -1) return dp[l][r];
-  dp[l][r] = INF;
-  int nl = l;
-  int nr = r;
-  while (nl < r && a[nl] == a[l]) nl++;
-  while (nr > l && a[nr] == a[r]) nr--;
-
-  if (nl > nr && a[l] == a[r]) {
-    dp[l][r] = 1;
-    return 1;
-  } else if (nl > nr) {
-    dp[l][r] = 2;
-    return 2;
+  dp[l][r] = 0;
+  if (a[l] == a[r])
+    dp[l][r] = max(dp[l][r], 1 + go(l + 1, r - 1));
+  for (int i = l + 1; i < r; i++)
+  {
+    dp[l][r] = max(dp[l][r], go(l, i) + go(i, r));
   }
-  for (int i=nl+1;nl<=nr;i++) {
-    if (a[nl] == a[i]) {
-      dp[l][r] = min(dp[l][r], a[nl] + a[i])
-    }
-  }
-  if (a[l] == a[r]) {
-    dp[l][r] = 1 + go(nl, nr);
-  } else {
-    dp[l][r] = min(dp[l][r], 1 + go(nl, r));
-    dp[l][r] = min(dp[l][r], 1 + go(l, nr));
-  }
-  //cout << l << " " << r << " " << dp[l][r] << "\n";
+  // cout << l << " " << r << " " << dp[l][r] << "\n";
   return dp[l][r];
 }
 
@@ -60,7 +43,7 @@ int solve() {
       dp[i][j] = -1;
     }
   }
-  return go(0, n-1);
+  return n - go(0, n - 1);
 }
 
 int main() {

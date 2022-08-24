@@ -18,10 +18,13 @@ typedef long long ll;
 using namespace std;
 
 int n;
+int a[10006];
 
-int solve() {
-  int res = 0;
-  return res;
+bool solve() {
+  for (int i=1;i<n;i++) {
+    if (a[i] < a[i-1]) return true;
+  }
+  return false;
 }
 
 int main() {
@@ -32,7 +35,10 @@ int main() {
   cin >> t;
   while (t--) {
     cin >> n;
-    cout << solve() << "\n";
+    for (int i=0;i<n;i++) {
+      cin >> a[i];
+    }
+    cout << (solve() ? "YES" : "NO") << "\n";
   }
   return 0;
 }
